@@ -1,0 +1,10 @@
+[package]
+name = "boot-core"
+version = "0.2.0-demo"
+edition = "2024"
+
+[dependencies]
+sha2.workspace = true
+ed25519-dalek.workspace = true
+zeroize.workspace = true
+

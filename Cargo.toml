@@ -1,0 +1,17 @@
+[workspace]
+members = ["crates/boot-core", "crates/efi-loader", "crates/initrdctl"]
+default-members = ["crates/boot-core", "crates/initrdctl"]
+resolver = "2"
+
+[workspace.dependencies]
+sha2 = { version = "0.10.9", default-features = false }
+ed25519-dalek = { version = "2.2.0", default-features = false, features = ["alloc", "zeroize"] }
+zeroize = { version = "1.8.2", default-features = false, features = ["alloc"] }
+boot-core = { path = "crates/boot-core" }
+
+[profile.release]
+panic = "abort"
+lto = true
+codegen-units = 1
+strip = true
+

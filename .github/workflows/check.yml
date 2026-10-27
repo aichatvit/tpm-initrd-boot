@@ -1,0 +1,19 @@
+name: check
+on: [push, pull_request]
+jobs:
+  rust-and-tpm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-uefi,x86_64-unknown-linux-musl
+          components: rustfmt,clippy
+      - run: sudo apt-get update && sudo apt-get install -y libtpms0
+      - run: cargo fmt --all -- --check
+      - run: scripts/test.sh
+      - run: cargo clippy --locked -p boot-core -p initrdctl --all-targets -- -D warnings
+      - run: |
+          cargo run --locked -p initrdctl -- keygen /tmp/ci.key /tmp/ci.pub
+          scripts/build.sh /tmp/ci.pub
+          TPMBOOT_PUBLIC_KEY=/tmp/ci.pub cargo clippy --locked -p efi-loader --target x86_64-unknown-uefi -- -D warnings

@@ -1,0 +1,19 @@
+[package]
+name = "efi-loader"
+version = "0.2.0-demo"
+edition = "2024"
+build = "build.rs"
+
+[[bin]]
+name = "tpmboot"
+path = "src/main.rs"
+test = false
+bench = false
+
+[dependencies]
+boot-core.workspace = true
+sha2.workspace = true
+zeroize.workspace = true
+uefi = { version = "0.36.1", features = ["alloc", "global_allocator", "panic_handler"] }
+uefi-raw = "0.13.0"
+

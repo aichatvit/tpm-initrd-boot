@@ -1,0 +1,11 @@
+[package]
+name = "initrdctl"
+version = "0.2.0-demo"
+edition = "2024"
+
+[dependencies]
+boot-core.workspace = true
+ed25519-dalek.workspace = true
+sha2.workspace = true
+zeroize.workspace = true
+
